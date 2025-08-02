@@ -1,0 +1,19 @@
+#!/bin/bash
+W_NUM=$(tr 'water' '01234' <<< "$WATER")
+S_NUM=$(tr 'stir.' '01234' <<< "$STIR")
+
+W_DEC=$(echo "$W_NUM" | awk '{s=0;for(i=1;i<=length;i++)s=s*5+substr($0,i,1);print s}')
+S_DEC=$(echo "$S_NUM" | awk '{s=0;for(i=1;i<=length;i++)s=s*5+substr($0,i,1);print s}')
+
+SUM=$((W_DEC + S_DEC))
+
+echo "$SUM" | awk '{
+  s="";
+  n=8;
+  a="bestchol";
+  while($0>0){
+    s=substr(a,($0%n)+1,1) s;
+    $0=int($0/n)
+  }
+  print s
+}'
